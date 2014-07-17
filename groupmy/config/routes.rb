@@ -7,7 +7,14 @@ Rails.application.routes.draw do
 		end
 		resources :posts
 	end
+	namespace :account do
+		resources :group
+		resources :posts
+	end
+	
 	root :to => "groups#index"
+
+
 
  	
  	# The priority is based upon order of creation: first created -> highest priority.
