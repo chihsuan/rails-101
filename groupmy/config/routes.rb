@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-	resources :groups
+	resources :groups do
+		resources :post
+	end
 	root :to => "groups#index"
 
  	

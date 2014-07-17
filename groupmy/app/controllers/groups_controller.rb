@@ -1,11 +1,13 @@
 class GroupsController < ApplicationController
-	
+	before_action :find_group, :only => [:show, :edit, :update, :destroy]
+
+
 	def index
 		@groups = Group.all
 	end
 
 	def show
-		@groups = Group.find(params[:id])
+		@posts = @group.posts
 	end
 
 	def new
@@ -13,13 +15,11 @@ class GroupsController < ApplicationController
 	end
 
 	def edit
-		@group = Group.find(params[:id])
 	end
 
-	def upadet
-		@group = Group.find(params[:id])
+	def update
 		if @group.update(group_params)
-			redirect_to group_path(@grop)
+			redirect_to group_path(@group)
 		else
 			render :edit
 		end
@@ -36,7 +36,6 @@ class GroupsController < ApplicationController
 
 	
   def destroy
-		@group = Group.find(params[:id])
  		@group.destroy
   	redirect_to groups_path
   end
@@ -48,5 +47,7 @@ class GroupsController < ApplicationController
 			params.require(:group).permit(:title, :description)
 		end
 
-
+		def find_group
+			@group = Group.find(params[:id])		
+		end
 end

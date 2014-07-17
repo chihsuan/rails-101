@@ -5,5 +5,20 @@ mary pull-right" ) %>
 	</div>
 	<h2> <%= @group.title %> </h2>
 	<p> <%= @group.description %> </p>
-</div
+	</div>
+
+	<table class="table">
+	<tbody>
+	<% @posts.each do |post| %>
+		<tr>
+			<td> <%= post.content %> </td>
+			<td> <%= link_to("Edit", edit_group_post_path(post.group, post), :class => "btn btn-mini")%>
+				<%= link_to("Delete", group_post_path(post.group, post), :class => "btn b\
+					tn-mini", :method => :delete, :confirm => "Are you sure?" ) %> </td>
+		</tr>
+	<% end %>
+</tbody>
+</table>
+</div>
+	
 
