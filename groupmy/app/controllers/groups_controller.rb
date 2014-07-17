@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
 	before_action :find_group, :only => [:show, :edit, :update, :destroy]
+	before_action :login_required, :only => [:new, :create, :edit,:update,:destroy]
 
 
 	def index
@@ -26,7 +27,7 @@ class GroupsController < ApplicationController
 	end
 
 	def create
-		@group = Group.new(group_params)
+		@group = current_user.groups.build(group_params)
 		if @group.save
 			redirect_to groups_path
 		else
@@ -35,10 +36,10 @@ class GroupsController < ApplicationController
 	end
 
 	
-  def destroy
+  	def destroy
  		@group.destroy
-  	redirect_to groups_path
-  end
+  		redirect_to groups_path
+	end
 
 
 	private
@@ -48,6 +49,6 @@ class GroupsController < ApplicationController
 		end
 
 		def find_group
-			@group = Group.find(params[:id])		
+			@group = current_user.groups.find(params[:id])
 		end
 end
