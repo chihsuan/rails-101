@@ -29,6 +29,7 @@ class GroupsController < ApplicationController
 	def create
 		@group = current_user.groups.build(group_params)
 		if @group.save
+			current_user.join!(@group)
 			redirect_to groups_path
 		else
 			render :new
@@ -41,7 +42,26 @@ class GroupsController < ApplicationController
   		redirect_to groups_path
 	end
 
+	def join
+		@group = Group.find(params[:id])
+		
+		if !current_user.is_member_of?(@group)
+			current_user.join!(@group)
+		else
+			flash[:warning] = "You are already join this group!"
+		end
+		redirect_to groups_path(@group)
+	end	
 
+	def quit
+		@group = Group.find(params[:id])
+		if current_user.is_member_of?(@group)
+			current_user.quit!(@group)
+		else
+			flash[:warning] = "You are already join this group!"
+		end
+		redirect_to groups_path(@group)
+	end
 	private
 
 		def group_params
