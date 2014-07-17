@@ -1,0 +1,11 @@
+<div class="span12">
+	<%= form_for @group do |f| %>
+		<%= f.text_field :title, :input_html => { :class => "input-xxlarge"} %>
+		<%= f.text_field :description, :input_html => { :class => "input-xxlarge"} %>
+	<div class="form-actions">
+					<%= f.submit "Submit", :disable_with => 'Submiting...', :class => "btn btn\
+					-primary" %>
+	</div>
+	<% end %>
+</div>
+
